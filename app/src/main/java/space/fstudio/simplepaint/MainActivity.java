@@ -17,11 +17,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import space.fstudio.simplepaint.Views.SimpleDrawingView;
+import space.fstudio.simplepaint.Views.VerticalSeekBar;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button redColorBtn, yellowColorBtn, greenColorBtn, blueColorBtn, purpleColorBtn, blackColorBtn;
-    SeekBar widthBar;
+    VerticalSeekBar widthBar;
     SimpleDrawingView simpleDrawingView;
 
     @Override
@@ -68,10 +69,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == 1) {// If request is cancelled, the result arrays are empty.
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
+                System.out.println("Permission allowed");
             } else {
                 Toast.makeText(MainActivity.this, "Permission denied to read your External storage", Toast.LENGTH_SHORT).show();
             }
