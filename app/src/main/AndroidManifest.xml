@@ -16,6 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:configChanges = "orientation|keyboard|keyboardHidden|screenLayout|screenSize"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity android:name="space.fstudio.simplepaint.MainActivity">
             <intent-filter>

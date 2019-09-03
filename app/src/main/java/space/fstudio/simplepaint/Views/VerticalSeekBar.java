@@ -2,19 +2,10 @@ package space.fstudio.simplepaint.Views;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.SeekBar;
-import android.widget.TextView;
-
-import space.fstudio.simplepaint.MainActivity;
-import space.fstudio.simplepaint.R;
 
 @SuppressLint("AppCompatCustomView")
 public class VerticalSeekBar extends SeekBar {

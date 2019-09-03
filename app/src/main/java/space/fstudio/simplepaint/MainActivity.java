@@ -46,15 +46,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         simpleDrawingView = findViewById(R.id.simpleDrawingView1);
 
+        widthBar.setThumb(getThumb(1));
+        widthBar.setProgress(1);
+
         if (widthBar.getProgress() == 0){
             widthBar.setProgress(1);
-            widthBar.setThumb(getThumb(1));
         }
+
         widthBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 simpleDrawingView.setWidth(i);
-                //TODO Fix lags
                 widthBar.setThumb(getThumb(i));
             }
 
@@ -68,20 +70,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         });
-    }
-
-    public Drawable getThumb(int progress) {
-
-        View thumbView = LayoutInflater.from(this).inflate(R.layout.layout_seekbar_thumb, null, false);
-        ((TextView) thumbView.findViewById(R.id.tvProgress)).setText(progress + "");
-
-        thumbView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-        Bitmap bitmap = Bitmap.createBitmap(thumbView.getMeasuredWidth(), thumbView.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        thumbView.layout(0, 0, thumbView.getMeasuredWidth(), thumbView.getMeasuredHeight());
-        thumbView.draw(canvas);
-
-        return new BitmapDrawable(getResources(), bitmap);
     }
 
     @SuppressLint("ResourceType")
@@ -118,6 +106,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public Drawable getThumb(int progress) {
+
+        View thumbView = LayoutInflater.from(this).inflate(R.layout.layout_seekbar_thumb, null, false);
+        ((TextView) thumbView.findViewById(R.id.tvProgress)).setText(progress + "");
+
+        thumbView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        Bitmap bitmap = Bitmap.createBitmap(thumbView.getMeasuredWidth(), thumbView.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        thumbView.layout(0, 0, thumbView.getMeasuredWidth(), thumbView.getMeasuredHeight());
+        thumbView.draw(canvas);
+
+        return new BitmapDrawable(getResources(), bitmap);
     }
 
     public void colorSelection() {
