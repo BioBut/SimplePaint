@@ -1,5 +1,6 @@
 package space.fstudio.simplepaint.Views;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -62,6 +63,7 @@ public class SimpleDrawingView extends View {
         invalidate();
     }
 
+    @SuppressLint("WrongThread")
     public void saveImage() {
         try {
             setDrawingCacheEnabled(true);

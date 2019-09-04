@@ -13,7 +13,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,9 +24,8 @@ import androidx.core.app.ActivityCompat;
 import space.fstudio.simplepaint.Views.SimpleDrawingView;
 import space.fstudio.simplepaint.Views.VerticalSeekBar;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity {
 
-    Button redColorBtn, yellowColorBtn, greenColorBtn, blueColorBtn, purpleColorBtn, blackColorBtn;
     VerticalSeekBar widthBar;
     SimpleDrawingView simpleDrawingView;
 
@@ -39,8 +37,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ActivityCompat.requestPermissions(MainActivity.this,
                 new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
                 1);
-
-        colorSelection();
 
         widthBar = findViewById(R.id.widthBar);
 
@@ -76,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.layout.menu, menu);
+        inflater.inflate(R.menu.menu, menu);
         return true;
     }
 
@@ -93,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.saveMenuBtn:
                 simpleDrawingView.saveImage();
                 return true;
@@ -120,48 +116,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         thumbView.draw(canvas);
 
         return new BitmapDrawable(getResources(), bitmap);
-    }
-
-    public void colorSelection() {
-        redColorBtn = findViewById(R.id.redColorBtn);
-        redColorBtn.setOnClickListener(this);
-
-        yellowColorBtn = findViewById(R.id.yellowColorBtn);
-        yellowColorBtn.setOnClickListener(this);
-
-        greenColorBtn = findViewById(R.id.greenColorBtn);
-        greenColorBtn.setOnClickListener(this);
-
-        blueColorBtn = findViewById(R.id.blueColorBtn);
-        blueColorBtn.setOnClickListener(this);
-
-        purpleColorBtn = findViewById(R.id.purpleColorBtn);
-        purpleColorBtn.setOnClickListener(this);
-
-        blackColorBtn = findViewById(R.id.blackColorBtn);
-        blackColorBtn.setOnClickListener(this);
-    }
-
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.redColorBtn:
-                simpleDrawingView.setHexColor("#e74c3c");
-                break;
-            case R.id.yellowColorBtn:
-                simpleDrawingView.setHexColor("#f1c40f");
-                break;
-            case R.id.greenColorBtn:
-                simpleDrawingView.setHexColor("#2ecc71");
-                break;
-            case R.id.blueColorBtn:
-                simpleDrawingView.setHexColor("#3498db");
-                break;
-            case R.id.purpleColorBtn:
-                simpleDrawingView.setHexColor("#9b59b6");
-                break;
-            case R.id.blackColorBtn:
-                simpleDrawingView.setHexColor("#000000");
-                break;
-        }
     }
 }

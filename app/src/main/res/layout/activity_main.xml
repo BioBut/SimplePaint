@@ -1,82 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:pikolo="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:ignore="MissingDefaultResource">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/colorBtns"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <Button
-            android:id="@+id/redColorBtn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="#e74c3c"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/yellowColorBtn"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/yellowColorBtn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="#f1c40f"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/greenColorBtn"
-            app:layout_constraintStart_toEndOf="@+id/redColorBtn"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/greenColorBtn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="#2ecc71"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/blueColorBtn"
-            app:layout_constraintStart_toEndOf="@+id/yellowColorBtn"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/blueColorBtn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="#3498db"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/purpleColorBtn"
-            app:layout_constraintStart_toEndOf="@+id/greenColorBtn"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/purpleColorBtn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="#9b59b6"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/blackColorBtn"
-            app:layout_constraintStart_toEndOf="@+id/blueColorBtn"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/blackColorBtn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="#000000"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/purpleColorBtn"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <space.fstudio.simplepaint.Views.SimpleDrawingView
         android:id="@+id/simpleDrawingView1"
@@ -86,10 +15,22 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/color_seek_bar"
         app:layout_constraintEnd_toStartOf="@+id/widthBar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/colorBtns" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.divyanshu.colorseekbar.ColorSeekBar
+        android:id="@+id/color_seek_bar"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/widthBar"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <space.fstudio.simplepaint.Views.VerticalSeekBar
         android:id="@+id/widthBar"
@@ -102,7 +43,7 @@
         android:min="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/colorBtns"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="UnusedAttribute" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

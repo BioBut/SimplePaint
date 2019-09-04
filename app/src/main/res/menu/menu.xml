@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/saveMenuBtn"
+        android:title="Save" />
+    <item
+        android:id="@+id/loadMenuBtn"
+        android:title="Load" />
+    <item
+        android:id="@+id/clearMenuBtn"
+        android:title="Clear" />
+    <item
+        android:id="@+id/colorPiker"
+        android:title="Color Picker" />
+</menu>
