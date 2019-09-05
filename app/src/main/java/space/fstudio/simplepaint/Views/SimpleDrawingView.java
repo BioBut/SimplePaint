@@ -18,10 +18,12 @@ import androidx.annotation.Nullable;
 import java.io.File;
 import java.io.FileOutputStream;
 
+import space.fstudio.simplepaint.Objects.FileOperations;
 import top.defaults.colorpicker.ColorPickerPopup;
 
 public class SimpleDrawingView extends View {
 
+    FileOperations fO = new FileOperations();
     Paint mPaint;
     int sColor;
     int width = 1;
@@ -59,7 +61,6 @@ public class SimpleDrawingView extends View {
         invalidate();
     }
 
-    @SuppressLint("WrongThread")
     public void saveImage() {
         try {
             setDrawingCacheEnabled(true);
@@ -68,9 +69,7 @@ public class SimpleDrawingView extends View {
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
                 f = new File(Environment.getExternalStorageDirectory() + File.separator + "filename" + ".png");
             }
-            FileOutputStream ostream = new FileOutputStream(f);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 10, ostream);
-            ostream.close();
+            fO.saveBitmap(bitmap, f);
             setDrawingCacheEnabled(false);
         } catch (Exception e) {
             e.printStackTrace();
