@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         widthBar.setThumb(getThumb(1));
         widthBar.setProgress(1);
 
-        if (widthBar.getProgress() == 0){
+        if (widthBar.getProgress() == 0) {
             widthBar.setProgress(1);
         }
 
@@ -98,6 +98,9 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.clearMenuBtn:
                 simpleDrawingView.clearCanvas();
+                return true;
+            case R.id.colorPiker:
+                simpleDrawingView.colorPickerDialog();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

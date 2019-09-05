@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.os.Environment;
@@ -19,10 +18,12 @@ import androidx.annotation.Nullable;
 import java.io.File;
 import java.io.FileOutputStream;
 
+import top.defaults.colorpicker.ColorPickerPopup;
+
 public class SimpleDrawingView extends View {
 
     Paint mPaint;
-    String color;
+    int sColor;
     int width = 1;
     Bitmap bMap;
     Path mPath;
@@ -46,11 +47,6 @@ public class SimpleDrawingView extends View {
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
 
-    }
-
-    public void setHexColor(String color) {
-        mPaint.setColor(Color.parseColor(color));
-        this.color = color;
     }
 
     public void setWidth(int width) {
@@ -120,7 +116,7 @@ public class SimpleDrawingView extends View {
         float x = event.getX();
         float y = event.getY();
 
-        if (color == null)
+        if (sColor == 0)
             Toast.makeText(getContext(), "Please select a color", Toast.LENGTH_SHORT).show();
         else
             switch (event.getAction()) {
@@ -167,6 +163,25 @@ public class SimpleDrawingView extends View {
         mCanvas.drawPath(mPath, mPaint);
         // kill this so we don't double draw
         mPath.reset();
+    }
+
+    public void colorPickerDialog() {
+        new ColorPickerPopup.Builder(getContext())
+                .initialColor(sColor) // Set initial color
+                .enableBrightness(true) // Enable brightness slider or not
+                .enableAlpha(true) // Enable alpha slider or not
+                .okTitle("Choose")
+                .cancelTitle("Cancel")
+                .showIndicator(true)
+                .showValue(true)
+                .build()
+                .show(getRootView(), new ColorPickerPopup.ColorPickerObserver() {
+                    @Override
+                    public void onColorPicked(int color) {
+                        sColor = color;
+                        mPaint.setColor(color);
+                    }
+                });
     }
 }
 
