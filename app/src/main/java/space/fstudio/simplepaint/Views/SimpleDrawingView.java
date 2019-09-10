@@ -17,14 +17,14 @@ import top.defaults.colorpicker.ColorPickerPopup;
 
 public class SimpleDrawingView extends View {
 
-    FileOperations fO = new FileOperations();
-    Paint mPaint;
-    int sColor;
-    int width = 1;
-    Bitmap bMap;
-    Path mPath;
-    Paint mBitmapPaint;
-    Canvas mCanvas;
+    private final FileOperations fO = new FileOperations();
+    private Paint mPaint;
+    private int sColor;
+    private int width = 1;
+    private Bitmap bMap;
+    private Path mPath;
+    private Paint mBitmapPaint;
+    private Canvas mCanvas;
     private int cHeight;
     private int cWidth;
 
@@ -34,7 +34,7 @@ public class SimpleDrawingView extends View {
         setupPaint();
     }
 
-    public void setupPaint() {
+    private void setupPaint() {
         mPath = new Path();
         mBitmapPaint = new Paint(Paint.DITHER_FLAG);
         mPaint = new Paint();

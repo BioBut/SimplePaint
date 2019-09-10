@@ -26,8 +26,8 @@ import space.fstudio.simplepaint.Views.VerticalSeekBar;
 
 public class MainActivity extends AppCompatActivity {
 
-    VerticalSeekBar widthBar;
-    SimpleDrawingView simpleDrawingView;
+    private VerticalSeekBar widthBar;
+    private SimpleDrawingView simpleDrawingView;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public Drawable getThumb(int progress) {
+    private Drawable getThumb(int progress) {
 
         View thumbView = LayoutInflater.from(this).inflate(R.layout.layout_seekbar_thumb, null, false);
         ((TextView) thumbView.findViewById(R.id.tvProgress)).setText(progress + "");
