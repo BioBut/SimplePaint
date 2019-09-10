@@ -1,22 +1,16 @@
 package space.fstudio.simplepaint.Views;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.os.Environment;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-
-import java.io.File;
-import java.io.FileOutputStream;
 
 import space.fstudio.simplepaint.Objects.FileOperations;
 import top.defaults.colorpicker.ColorPickerPopup;
@@ -62,30 +56,19 @@ public class SimpleDrawingView extends View {
     }
 
     public void saveImage() {
-        try {
-            setDrawingCacheEnabled(true);
-            Bitmap bitmap = getDrawingCache();
-            File f = null;
-            if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                f = new File(Environment.getExternalStorageDirectory() + File.separator + "filename" + ".png");
-            }
-            fO.saveBitmap(bitmap, f);
-            setDrawingCacheEnabled(false);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        setDrawingCacheEnabled(true);
+        Bitmap bitmap = getDrawingCache();
+        fO.saveBitmap(bitmap, getContext());
+        setDrawingCacheEnabled(false);
     }
 
     public void loadImage() {
-        File file = new File(Environment.getExternalStorageDirectory() + File.separator + "filename" + ".png");
-        System.out.println("Dose file exist = " + file.exists());
-        BitmapFactory.Options opts = new BitmapFactory.Options();
-        opts.inMutable = true;
-        if (file.exists()) {
-            bMap = BitmapFactory.decodeFile(file.getPath(), opts);
+        Bitmap testMap = fO.loadBitmap(getContext());
+        if (testMap != null) {
+            bMap = testMap;
             mCanvas = new Canvas(bMap);
-        }
-        invalidate();
+            invalidate();
+        } else Toast.makeText(getContext(), "Saved file doesn't exist", Toast.LENGTH_SHORT).show();
     }
 
     @Override
