@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Simple Paint</string>
+    <string name="save_as">Save As …</string>
+    <string name="save">Save</string>
+    <string name="load">Load</string>
+    <string name="clear">Clear</string>
+    <string name="color_picker">Color Picker</string>
 </resources>

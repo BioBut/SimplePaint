@@ -1,10 +1,12 @@
 package space.fstudio.simplepaint.Views;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,7 +19,7 @@ import top.defaults.colorpicker.ColorPickerPopup;
 
 public class SimpleDrawingView extends View {
 
-    private final FileOperations fO = new FileOperations();
+    private FileOperations fO;
     private Paint mPaint;
     private int sColor;
     private int width = 1;
@@ -45,11 +47,16 @@ public class SimpleDrawingView extends View {
 
     }
 
+    public void setActivity(Activity activity) {
+        fO = new FileOperations(activity);
+    }
+
     public void setWidth(int width) {
         this.width = width;
     }
 
     public void clearCanvas() {
+        fO.setFilename(null);
         bMap = Bitmap.createBitmap(cWidth, cHeight, Bitmap.Config.ARGB_8888);
         mCanvas = new Canvas(bMap);
         invalidate();
@@ -62,13 +69,26 @@ public class SimpleDrawingView extends View {
         setDrawingCacheEnabled(false);
     }
 
+    public void saveImageAs() {
+        setDrawingCacheEnabled(true);
+        Bitmap bitmap = getDrawingCache();
+        fO.saveBitmapAs(bitmap, getContext());
+        setDrawingCacheEnabled(false);
+    }
+
     public void loadImage() {
-        Bitmap testMap = fO.loadBitmap(getContext());
-        if (testMap != null) {
-            bMap = testMap;
-            mCanvas = new Canvas(bMap);
-            invalidate();
-        } else Toast.makeText(getContext(), "Saved file doesn't exist", Toast.LENGTH_SHORT).show();
+        fO.requestBMap();
+//        Bitmap testMap = fO.();
+//        if (testMap != null) {
+//            bMap = testMap;
+//            mCanvas = new Canvas(bMap);
+//            invalidate();
+//        } else Toast.makeText(getContext(), "Saved file doesn't exist", Toast.LENGTH_SHORT).show();
+    }
+
+    public void setBMap(Uri data) {
+        bMap = fO.loadBitmap(getContext(), data);
+        mCanvas = new Canvas(bMap);
     }
 
     @Override

@@ -2,6 +2,7 @@ package space.fstudio.simplepaint;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -41,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         widthBar = findViewById(R.id.widthBar);
 
         simpleDrawingView = findViewById(R.id.simpleDrawingView1);
+        simpleDrawingView.setActivity(this);
 
         widthBar.setThumb(getThumb(1));
         widthBar.setProgress(1);
@@ -93,6 +96,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.saveMenuBtn:
                 simpleDrawingView.saveImage();
                 return true;
+            case R.id.saveAsMenuBtn:
+                simpleDrawingView.saveImageAs();
+                return true;
             case R.id.loadMenuBtn:
                 simpleDrawingView.loadImage();
                 return true;
@@ -119,5 +125,14 @@ public class MainActivity extends AppCompatActivity {
         thumbView.draw(canvas);
 
         return new BitmapDrawable(getResources(), bitmap);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 122 && resultCode == RESULT_OK)
+            if (data != null) {
+                simpleDrawingView.setBMap(data.getData());
+            }
     }
 }
