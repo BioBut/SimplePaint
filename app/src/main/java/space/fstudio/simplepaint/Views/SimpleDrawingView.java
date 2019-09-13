@@ -1,13 +1,12 @@
 package space.fstudio.simplepaint.Views;
 
-import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.os.Environment;
+import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,20 +14,19 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import java.io.File;
-import java.io.FileOutputStream;
-
+import space.fstudio.simplepaint.Objects.FileOperations;
 import top.defaults.colorpicker.ColorPickerPopup;
 
 public class SimpleDrawingView extends View {
 
-    Paint mPaint;
-    int sColor;
-    int width = 1;
-    Bitmap bMap;
-    Path mPath;
-    Paint mBitmapPaint;
-    Canvas mCanvas;
+    private FileOperations fO;
+    private Paint mPaint;
+    private int sColor;
+    private int width = 1;
+    private Bitmap bMap;
+    private Path mPath;
+    private Paint mBitmapPaint;
+    private Canvas mCanvas;
     private int cHeight;
     private int cWidth;
 
@@ -38,7 +36,7 @@ public class SimpleDrawingView extends View {
         setupPaint();
     }
 
-    public void setupPaint() {
+    private void setupPaint() {
         mPath = new Path();
         mBitmapPaint = new Paint(Paint.DITHER_FLAG);
         mPaint = new Paint();
@@ -49,44 +47,48 @@ public class SimpleDrawingView extends View {
 
     }
 
+    public void setActivity(Activity activity) {
+        fO = new FileOperations(activity);
+    }
+
     public void setWidth(int width) {
         this.width = width;
     }
 
     public void clearCanvas() {
+        fO.setFilename(null);
         bMap = Bitmap.createBitmap(cWidth, cHeight, Bitmap.Config.ARGB_8888);
         mCanvas = new Canvas(bMap);
         invalidate();
     }
 
-    @SuppressLint("WrongThread")
     public void saveImage() {
-        try {
-            setDrawingCacheEnabled(true);
-            Bitmap bitmap = getDrawingCache();
-            File f = null;
-            if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                f = new File(Environment.getExternalStorageDirectory() + File.separator + "filename" + ".png");
-            }
-            FileOutputStream ostream = new FileOutputStream(f);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 10, ostream);
-            ostream.close();
-            setDrawingCacheEnabled(false);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        setDrawingCacheEnabled(true);
+        Bitmap bitmap = getDrawingCache();
+        fO.saveBitmap(bitmap, getContext());
+        setDrawingCacheEnabled(false);
+    }
+
+    public void saveImageAs() {
+        setDrawingCacheEnabled(true);
+        Bitmap bitmap = getDrawingCache();
+        fO.saveBitmapAs(bitmap, getContext());
+        setDrawingCacheEnabled(false);
     }
 
     public void loadImage() {
-        File file = new File(Environment.getExternalStorageDirectory() + File.separator + "filename" + ".png");
-        System.out.println("Dose file exist = " + file.exists());
-        BitmapFactory.Options opts = new BitmapFactory.Options();
-        opts.inMutable = true;
-        if (file.exists()) {
-            bMap = BitmapFactory.decodeFile(file.getPath(), opts);
-            mCanvas = new Canvas(bMap);
-        }
-        invalidate();
+        fO.requestBMap();
+//        Bitmap testMap = fO.();
+//        if (testMap != null) {
+//            bMap = testMap;
+//            mCanvas = new Canvas(bMap);
+//            invalidate();
+//        } else Toast.makeText(getContext(), "Saved file doesn't exist", Toast.LENGTH_SHORT).show();
+    }
+
+    public void setBMap(Uri data) {
+        bMap = fO.loadBitmap(getContext(), data);
+        mCanvas = new Canvas(bMap);
     }
 
     @Override

@@ -2,14 +2,24 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/saveMenuBtn"
-        android:title="Save" />
+        android:title="@string/save"
+        android:icon="@drawable/ic_save_black_24dp" />
+
+    <item
+        android:id="@+id/saveAsMenuBtn"
+        android:title="@string/save_as"
+        android:icon="@drawable/ic_save_black_24dp" />
+
     <item
         android:id="@+id/loadMenuBtn"
-        android:title="Load" />
+        android:title="@string/load"
+        android:icon="@drawable/ic_load_file_black_24dp" />
+
     <item
         android:id="@+id/clearMenuBtn"
-        android:title="Clear" />
+        android:title="@string/clear" />
+
     <item
         android:id="@+id/colorPiker"
-        android:title="Color Picker" />
+        android:title="@string/color_picker" />
 </menu>
