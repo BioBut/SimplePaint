@@ -28,6 +28,7 @@ import space.fstudio.simplepaint.Views.VerticalSeekBar;
 
 public class MainActivity extends AppCompatActivity {
 
+    long exitTime;
     private VerticalSeekBar widthBar;
     private SimpleDrawingView simpleDrawingView;
 
@@ -69,6 +70,16 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if ((System.currentTimeMillis() - exitTime) > 1500) {
+            exitTime = System.currentTimeMillis();
+            Toast.makeText(this, "Press back again to exit.", Toast.LENGTH_SHORT).show();
+        } else {
+            finish();
+        }
     }
 
     @SuppressLint("ResourceType")
