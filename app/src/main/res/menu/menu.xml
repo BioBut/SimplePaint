@@ -4,24 +4,28 @@
     <item
         android:id="@+id/saveMenuBtn"
         android:icon="@drawable/ic_save_black_24dp"
+        android:iconTint="@android:color/white"
         android:title="@string/save"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/saveAsMenuBtn"
         android:icon="@drawable/ic_save_black_24dp"
+        android:iconTint="@android:color/white"
         android:title="@string/save_as"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/loadMenuBtn"
         android:icon="@drawable/ic_load_file_black_24dp"
+        android:iconTint="@android:color/white"
         android:title="@string/load"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/clearMenuBtn"
         android:icon="@drawable/ic_layers_clear_black_24dp"
+        android:iconTint="@android:color/white"
         android:title="@string/clear"
         app:showAsAction="always" />
 

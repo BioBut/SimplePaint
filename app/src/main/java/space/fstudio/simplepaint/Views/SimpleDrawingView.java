@@ -2,6 +2,7 @@ package space.fstudio.simplepaint.Views;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -17,9 +18,10 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import space.fstudio.simplepaint.MainActivity;
 import space.fstudio.simplepaint.Objects.FileOperations;
 import top.defaults.colorpicker.ColorPickerPopup;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class SimpleDrawingView extends View {
 
@@ -33,15 +35,18 @@ public class SimpleDrawingView extends View {
     private Canvas mCanvas;
     private int cHeight;
     private int cWidth;
-    MainActivity mainActivity = new MainActivity();
+    private SharedPreferences sPref;
 
 
     public SimpleDrawingView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         setupPaint();
+
     }
 
     private void setupPaint() {
+        sPref = getContext().getSharedPreferences("COLOR", MODE_PRIVATE);
+
         mPath = new Path();
         mBitmapPaint = new Paint(Paint.DITHER_FLAG);
         mPaint = new Paint();
@@ -49,9 +54,7 @@ public class SimpleDrawingView extends View {
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
-        mPaint.setColor(Color.BLACK);
         sColor = Color.BLACK;
-
     }
 
     public void setActivity(Activity activity) {
@@ -175,6 +178,8 @@ public class SimpleDrawingView extends View {
     }
 
     public void colorPickerDialog(final MenuItem item) {
+        sPref = getContext().getSharedPreferences("COLOR", MODE_PRIVATE);
+        sColor = sPref.getInt("selectedColor", 0);
         new ColorPickerPopup.Builder(getContext())
                 .initialColor(sColor) // Set initial color
                 .enableBrightness(true) // Enable brightness slider or not
@@ -189,9 +194,20 @@ public class SimpleDrawingView extends View {
                     public void onColorPicked(int color) {
                         sColor = color;
                         mPaint.setColor(color);
+
                         item.getIcon().setColorFilter(sColor, PorterDuff.Mode.SRC_ATOP);
+
+                        SharedPreferences.Editor ed = sPref.edit();
+                        ed.putInt("selectedColor", sColor);
+                        ed.apply();
                     }
                 });
+    }
+
+    public void loadSettings(MenuItem item){
+        sPref = getContext().getSharedPreferences("COLOR", MODE_PRIVATE);
+        sColor = sPref.getInt("selectedColor", 0);
+        item.getIcon().setColorFilter(sColor, PorterDuff.Mode.SRC_ATOP);
     }
 }
 

@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         widthBar = findViewById(R.id.widthBar);
 
         simpleDrawingView = findViewById(R.id.simpleDrawingView1);
+
         simpleDrawingView.setActivity(this);
 
         widthBar.setThumb(getThumb(1));
@@ -72,6 +73,15 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("ResourceType")
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        simpleDrawingView.loadSettings((menu.getItem(4)));
+        return true;
+    }
+
     @Override
     public void onBackPressed() {
         if ((System.currentTimeMillis() - exitTime) > 1500) {
@@ -80,14 +90,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             finish();
         }
-    }
-
-    @SuppressLint("ResourceType")
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-        return true;
     }
 
     @Override
