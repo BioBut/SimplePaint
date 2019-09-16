@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
                 simpleDrawingView.clearCanvas();
                 return true;
             case R.id.colorPiker:
-                simpleDrawingView.colorPickerDialog();
+                simpleDrawingView.colorPickerDialog(item);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -126,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Drawable getThumb(int progress) {
 
+        @SuppressLint("InflateParams")
         View thumbView = LayoutInflater.from(this).inflate(R.layout.layout_seekbar_thumb, null, false);
         ((TextView) thumbView.findViewById(R.id.tvProgress)).setText(progress + "");
 

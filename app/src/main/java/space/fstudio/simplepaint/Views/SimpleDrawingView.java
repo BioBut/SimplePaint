@@ -7,14 +7,17 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.util.AttributeSet;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import space.fstudio.simplepaint.MainActivity;
 import space.fstudio.simplepaint.Objects.FileOperations;
 import top.defaults.colorpicker.ColorPickerPopup;
 
@@ -30,6 +33,7 @@ public class SimpleDrawingView extends View {
     private Canvas mCanvas;
     private int cHeight;
     private int cWidth;
+    MainActivity mainActivity = new MainActivity();
 
 
     public SimpleDrawingView(Context context, @Nullable AttributeSet attrs) {
@@ -170,7 +174,7 @@ public class SimpleDrawingView extends View {
         mPath.reset();
     }
 
-    public void colorPickerDialog() {
+    public void colorPickerDialog(final MenuItem item) {
         new ColorPickerPopup.Builder(getContext())
                 .initialColor(sColor) // Set initial color
                 .enableBrightness(true) // Enable brightness slider or not
@@ -185,6 +189,7 @@ public class SimpleDrawingView extends View {
                     public void onColorPicked(int color) {
                         sColor = color;
                         mPaint.setColor(color);
+                        item.getIcon().setColorFilter(sColor, PorterDuff.Mode.SRC_ATOP);
                     }
                 });
     }
