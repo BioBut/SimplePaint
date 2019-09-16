@@ -203,11 +203,5 @@ public class SimpleDrawingView extends View {
                     }
                 });
     }
-
-    public void loadSettings(MenuItem item){
-        sPref = getContext().getSharedPreferences("COLOR", MODE_PRIVATE);
-        sColor = sPref.getInt("selectedColor", 0);
-        item.getIcon().setColorFilter(sColor, PorterDuff.Mode.SRC_ATOP);
-    }
 }
 

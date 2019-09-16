@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import space.fstudio.simplepaint.Objects.PrefUtils;
 import space.fstudio.simplepaint.Views.SimpleDrawingView;
 import space.fstudio.simplepaint.Views.VerticalSeekBar;
 
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
-        simpleDrawingView.loadSettings((menu.getItem(4)));
+        menu.getItem(4).getIcon().setColorFilter(new PrefUtils().loadMenuColor(this));
         return true;
     }
 
