@@ -48,8 +48,8 @@ public class MainActivity extends AppCompatActivity {
 
         simpleDrawingView.setActivity(this);
 
-        widthBar.setThumb(getThumb(1));
-        widthBar.setProgress(1);
+        widthBar.setThumb(getThumb(PrefUtils.Methods.loadWidth(this)));
+        widthBar.setProgress(PrefUtils.Methods.loadWidth(this));
 
         if (widthBar.getProgress() == 0) {
             widthBar.setProgress(1);
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
-        menu.getItem(4).getIcon().setColorFilter(new PrefUtils().loadMenuColor(this));
+        menu.getItem(4).getIcon().setColorFilter(PrefUtils.Methods.loadMenuColor(this));
         return true;
     }
 

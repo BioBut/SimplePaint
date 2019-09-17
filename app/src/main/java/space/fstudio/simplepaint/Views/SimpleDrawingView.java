@@ -2,10 +2,8 @@ package space.fstudio.simplepaint.Views;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
@@ -19,23 +17,21 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import space.fstudio.simplepaint.Objects.FileOperations;
+import space.fstudio.simplepaint.Objects.PrefUtils;
 import top.defaults.colorpicker.ColorPickerPopup;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class SimpleDrawingView extends View {
 
     private FileOperations fO;
     private Paint mPaint;
     private int sColor;
-    private int width = 1;
+    private int width;
     private Bitmap bMap;
     private Path mPath;
     private Paint mBitmapPaint;
     private Canvas mCanvas;
     private int cHeight;
     private int cWidth;
-    private SharedPreferences sPref;
 
 
     public SimpleDrawingView(Context context, @Nullable AttributeSet attrs) {
@@ -45,8 +41,6 @@ public class SimpleDrawingView extends View {
     }
 
     private void setupPaint() {
-        sPref = getContext().getSharedPreferences("COLOR", MODE_PRIVATE);
-
         mPath = new Path();
         mBitmapPaint = new Paint(Paint.DITHER_FLAG);
         mPaint = new Paint();
@@ -54,7 +48,9 @@ public class SimpleDrawingView extends View {
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
-        sColor = Color.BLACK;
+        mPaint.setColor(PrefUtils.Methods.loadColor(getContext()));
+        sColor = PrefUtils.Methods.loadColor(getContext());
+        width = PrefUtils.Methods.loadWidth(getContext());
     }
 
     public void setActivity(Activity activity) {
@@ -63,6 +59,7 @@ public class SimpleDrawingView extends View {
 
     public void setWidth(int width) {
         this.width = width;
+        PrefUtils.Methods.saveWidth(width, getContext());
     }
 
     public void clearCanvas() {
@@ -178,10 +175,8 @@ public class SimpleDrawingView extends View {
     }
 
     public void colorPickerDialog(final MenuItem item) {
-        sPref = getContext().getSharedPreferences("COLOR", MODE_PRIVATE);
-        sColor = sPref.getInt("selectedColor", 0);
         new ColorPickerPopup.Builder(getContext())
-                .initialColor(sColor) // Set initial color
+                .initialColor(PrefUtils.Methods.loadColor(getContext())) // Set initial color
                 .enableBrightness(true) // Enable brightness slider or not
                 .enableAlpha(true) // Enable alpha slider or not
                 .okTitle("Choose")
@@ -194,12 +189,9 @@ public class SimpleDrawingView extends View {
                     public void onColorPicked(int color) {
                         sColor = color;
                         mPaint.setColor(color);
+                        item.getIcon().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
 
-                        item.getIcon().setColorFilter(sColor, PorterDuff.Mode.SRC_ATOP);
-
-                        SharedPreferences.Editor ed = sPref.edit();
-                        ed.putInt("selectedColor", sColor);
-                        ed.apply();
+                        PrefUtils.Methods.saveColor(color, getContext());
                     }
                 });
     }
